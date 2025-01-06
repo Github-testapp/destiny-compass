@@ -109,23 +109,23 @@ export const TimelinePage = () => {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="flex justify-between items-center mb-8">
-        <h1 className="text-2xl font-bold text-gray-800">思い出タイムライン</h1>
+        <h1 className="text-2xl font-bold text-gray-800">縁結びタイムライン</h1>
         <button
           onClick={() => setIsCreateModalOpen(true)}
           className="flex items-center px-4 py-2 bg-pink-500 text-white rounded-lg hover:bg-pink-600 transition-colors"
         >
           <Heart className="w-4 h-4 mr-2" />
-          新しい思い出を追加
+          想い出を結ぶ
         </button>
       </div>
 
       <div className="space-y-6">
-        {memories.map(memory => (
+        {memories.map((memory) => (
           <TimelineEvent key={memory.id} memory={memory} />
         ))}
         {memories.length === 0 && (
           <div className="text-center py-12 text-gray-500">
-            まだ思い出が登録されていません。新しい思い出を追加してみましょう！
+            大切な思い出を水晶玉に刻んでいきましょう！
           </div>
         )}
       </div>
@@ -135,7 +135,7 @@ export const TimelinePage = () => {
         onClose={() => setIsCreateModalOpen(false)}
         onSubmit={handleAddMemory}
         initialData={editingMemory}
-        mode={editingMemory ? 'edit' : 'create'}
+        mode={editingMemory ? "edit" : "create"}
       />
     </div>
   );

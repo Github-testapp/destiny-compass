@@ -97,10 +97,10 @@ export const CompatibilityChecklist = () => {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-gray-800 mb-2">相性チェック</h1>
+        <h1 className="text-2xl font-bold text-gray-800 mb-2">関係性チェック</h1>
         <p className="text-gray-600">
-          以下の質問に答えて、二人の関係をより深く理解しましょう。
-          正直に答えることが大切です。
+          付き合う前と後、定期的に関係性の進捗を以下の質問に定期的に答えて、将来性があるかどうかのチェックをしましょう。
+          二人進んでいる方向が一緒かどうかもしっかり確認してみて下さい。
         </p>
       </div>
 

@@ -26,38 +26,38 @@ const App = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   // メニュー項目の定義
-  const menuItems = [
-    { 
-      id: "home", 
-      name: "ホーム", 
-      icon: Home,
-      description: "アプリのホーム画面に戻ります"
-    },
-    { 
-      id: "timeline", 
-      name: "タイムライン", 
-      icon: Calendar,
-      description: "思い出を時系列で振り返ります"
-    },
-    { 
-      id: "checklist", 
-      name: "相性チェック", 
-      icon: CheckSquare,
-      description: "二人の相性を確認できます"
-    },
-    { 
-      id: "diary", 
-      name: "日記", 
-      icon: Book,
-      description: "日々の出来事を記録します"
-    },
-    { 
-      id: "safety", 
-      name: "安全ガイド", 
-      icon: Shield,
-      description: "安全に関する重要な情報"
-    },
-  ];
+const menuItems = [
+ { 
+   id: "home", 
+   name: "占いの間", 
+   icon: Home,
+   description: "縁結び占い師の玄関へ"
+ },
+ { 
+   id: "timeline", 
+   name: "縁結びタイムライン", 
+   icon: Calendar,
+   description: "大切な思い出を水晶玉に記します"
+ },
+ { 
+   id: "checklist", 
+   name: "運命の相性チェック", 
+   icon: CheckSquare,
+   description: "二人の絆を占いの力で紐解きます"
+ },
+ { 
+   id: "diary", 
+   name: "心結びの日記", 
+   icon: Book,
+   description: "日々の想いを心を込めて綴ります"
+ },
+ { 
+   id: "safety", 
+   name: "愛の守り書", 
+   icon: Shield,
+   description: "真実の愛を守るための占いの導き"
+ },
+];
 
   // ページコンテンツのレンダリング
   const renderContent = () => {

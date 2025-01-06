@@ -25,38 +25,42 @@ const HomePage = ({ setCurrentPage }) => {
   const features = [
     {
       icon: Calendar,
-      title: "タイムライン",
-      description: "大切な思い出を記録し、二人の歴史を振り返ることができます。写真や場所も登録可能です。",
-      page: "timeline"
+      title: "縁結びタイムライン",
+      description:
+        "大切な思い出をすべて記録。いつ、どこで、何をしたのか。愛を育むために使った時間とお金を振り返りながら、より素敵な関係を築いていきましょう。",
+      page: "timeline",
     },
     {
       icon: CheckSquare,
-      title: "相性チェック",
-      description: "科学的な診断で二人の相性を分析。より良い関係づくりのアドバイスも提供します。",
-      page: "checklist"
+      title: "運命の相性チェック",
+      description:
+        "出会いの段階から細やかにチェック。大切な時間とご縁を大事にするための神秘の導き。運命の人との出会いを見極めます。",
+      page: "checklist",
     },
     {
       icon: Book,
-      title: "デイリー日記",
-      description: "日々の出来事や感情を記録。二人の関係の成長を振り返ることができます。",
-      page: "diary"
+      title: "心結びの日記",
+      description:
+        "日々の想いを綴り、自分自身と向き合う大切な時間。純粋な気持ちと正直に向き合い、より良い関係を紡ぐための心の記録。",
+      page: "diary",
     },
     {
       icon: Shield,
-      title: "安全ガイド",
-      description: "安全に恋愛を楽しむためのアドバイスとガイドラインを提供します。",
-      page: "safety"
-    }
+      title: "愛の守り書",
+      description:
+        "恋の迷路で迷わないように。不誠実な出会いを見分け、真実の愛を守るための占い師からの大切な助言と導き。安全に恋を育むためのガイドラインをお届けします。",
+      page: "safety",
+    },
   ];
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-800 mb-4">
-          あなたの恋愛をサポート
+          縁結び占い師が導く ふたりの想いの物語
         </h1>
         <p className="text-gray-600 text-lg max-w-2xl">
-          タイムラインで思い出を記録し、相性チェックで二人の関係をより深く理解しましょう
+          心を紡ぐ占いの力で 大切な絆を深めていきましょう{" "}
         </p>
       </div>
 

@@ -1,12 +1,12 @@
-import React from 'react';
-import { X } from 'lucide-react';
+import React from "react";
+import { X } from "lucide-react";
 
-export const Header = ({ 
-  setCurrentPage, 
-  currentPage, 
-  menuItems, 
-  isMenuOpen, 
-  setIsMenuOpen 
+export const Header = ({
+  setCurrentPage,
+  currentPage,
+  menuItems,
+  isMenuOpen,
+  setIsMenuOpen,
 }) => {
   return (
     <div className="bg-gradient-to-b from-white to-pink-50 sticky top-0 z-50">
@@ -14,15 +14,11 @@ export const Header = ({
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-16">
             {/* ロゴ */}
-            <div 
+            <div
               className="flex items-center gap-2 cursor-pointer"
-              onClick={() => setCurrentPage('home')}
+              onClick={() => setCurrentPage("home")}
             >
-              <img 
-                src="/favicon.svg" 
-                alt="Logo" 
-                className="w-8 h-8"
-              />
+              <img src="/favicon.svg" alt="Logo" className="w-8 h-8" />
               <div>
                 <div className="text-xl font-bold text-pink-500">
                   縁結びの占い師
@@ -42,9 +38,10 @@ export const Header = ({
                     key={item.id}
                     onClick={() => setCurrentPage(item.id)}
                     className={`flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors
-                      ${currentPage === item.id 
-                        ? 'bg-pink-100 text-pink-600' 
-                        : 'text-gray-600 hover:bg-pink-50'
+                      ${
+                        currentPage === item.id
+                          ? "bg-pink-100 text-pink-600"
+                          : "text-gray-600 hover:bg-pink-50"
                       }`}
                   >
                     <Icon className="w-4 h-4 mr-2" />
@@ -62,8 +59,18 @@ export const Header = ({
               {isMenuOpen ? (
                 <X className="w-6 h-6" />
               ) : (
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                <svg
+                  className="w-6 h-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
                 </svg>
               )}
             </button>
@@ -82,15 +89,18 @@ export const Header = ({
                       setIsMenuOpen(false);
                     }}
                     className={`flex items-center w-full px-3 py-2 rounded-md text-sm font-medium transition-colors
-                      ${currentPage === item.id 
-                        ? 'bg-pink-100 text-pink-600' 
-                        : 'text-gray-600 hover:bg-pink-50'
+                      ${
+                        currentPage === item.id
+                          ? "bg-pink-100 text-pink-600"
+                          : "text-gray-600 hover:bg-pink-50"
                       }`}
                   >
                     <Icon className="w-4 h-4 mr-2" />
                     <div>
                       <div>{item.name}</div>
-                      <div className="text-xs text-gray-500">{item.description}</div>
+                      <div className="text-xs text-gray-500">
+                        {item.description}
+                      </div>
                     </div>
                   </button>
                 );

@@ -123,9 +123,9 @@ export const DiaryPage = () => {
     <div className="container mx-auto px-4 py-8">
       <div className="flex justify-between items-center mb-8">
         <div>
-          <h1 className="text-2xl font-bold text-gray-800 mb-2">デイリー日記</h1>
+          <h1 className="text-2xl font-bold text-gray-800 mb-2">心結びの日記</h1>
           <p className="text-gray-600">
-            日々の出来事や感情を記録して、大切な思い出を残しましょう
+            日々の想いを心を込めて綴り、魂の成長を見守りましょう
           </p>
         </div>
         <button 
@@ -133,7 +133,7 @@ export const DiaryPage = () => {
           className="flex items-center px-4 py-2 bg-pink-500 text-white rounded-lg hover:bg-pink-600 transition-colors"
         >
           <PlusCircle className="w-4 h-4 mr-2" />
-          新規作成
+          想いを綴る
         </button>
       </div>
 
@@ -152,8 +152,8 @@ export const DiaryPage = () => {
             <div className="text-center py-12 bg-white rounded-xl shadow-sm">
               <Book className="w-12 h-12 text-gray-400 mx-auto mb-4" />
               <p className="text-gray-600">
-                まだ日記が記録されていません。<br />
-                新しい日記を書いてみましょう！
+                まだ心の記録が綴られていません。<br />
+            あなたの大切な想いを紡いでいきましょう
               </p>
             </div>
           )}
@@ -161,19 +161,19 @@ export const DiaryPage = () => {
 
         <div className="bg-white rounded-xl p-6 shadow-sm h-fit sticky top-4">
           <h2 className="text-lg font-semibold text-gray-800 mb-4">
-            今月の記録
+            心の軌跡
           </h2>
           <div className="space-y-4">
             <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-              <span className="text-gray-600">記録した日数</span>
+              <span className="text-gray-600">想いを綴った日々</span>
               <span className="font-semibold text-gray-800">{statistics.totalEntries}日</span>
             </div>
             <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-              <span className="text-gray-600">写真付きの記録</span>
+              <span className="text-gray-600">想い出の写真</span>
               <span className="font-semibold text-gray-800">{statistics.withPhotos}件</span>
             </div>
             <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-              <span className="text-gray-600">場所の記録</span>
+              <span className="text-gray-600">心が留まった場所</span>
               <span className="font-semibold text-gray-800">{statistics.withLocations}件</span>
             </div>
           </div>
