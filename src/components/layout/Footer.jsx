@@ -1,7 +1,7 @@
 import React from 'react';
 import { Heart } from 'lucide-react';
 
-export const Footer = () => {
+export const Footer = ({ setCurrentPage }) => {
   return (
     <footer className="bg-white border-t">
       <div className="container mx-auto px-4 py-6">
@@ -13,9 +13,24 @@ export const Footer = () => {
           </div>
           
           <div className="mt-4 md:mt-0 flex space-x-6 text-sm text-gray-500">
-            <a href="#" className="hover:text-gray-600">プライバシーポリシー</a>
-            <a href="#" className="hover:text-gray-600">利用規約</a>
-            <a href="#" className="hover:text-gray-600">お問い合わせ</a>
+            <button 
+              onClick={() => setCurrentPage('privacy')} 
+              className="hover:text-gray-600"
+            >
+              プライバシーポリシー
+            </button>
+            <button 
+              onClick={() => setCurrentPage('terms')} 
+              className="hover:text-gray-600"
+            >
+              利用規約
+            </button>
+            <button 
+              onClick={() => setCurrentPage('contact')} 
+              className="hover:text-gray-600"
+            >
+              お問い合わせ
+            </button>
           </div>
         </div>
       </div>

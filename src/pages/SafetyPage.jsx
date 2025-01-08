@@ -1,5 +1,5 @@
 import React from 'react';
-import { Shield, AlertTriangle, Phone, Heart } from 'lucide-react';
+import { Shield, AlertTriangle, Phone, Heart, Users, Ban, CheckCircle } from 'lucide-react';
 
 const SafetyCard = ({ icon: Icon, title, description }) => (
   <div className="bg-white rounded-xl p-6 shadow-sm">
@@ -17,12 +17,16 @@ const SafetyCard = ({ icon: Icon, title, description }) => (
   </div>
 );
 
+const SectionHeader = ({ icon: Icon, title }) => (
+  <div className="flex items-center gap-3 mb-4">
+    <Icon className="w-6 h-6 text-pink-500" />
+    <h3 className="text-lg font-semibold text-gray-800">{title}</h3>
+  </div>
+);
+
 const EmergencyContact = () => (
   <div className="bg-pink-50 rounded-xl p-6">
-    <div className="flex items-center gap-3 mb-4">
-      <Phone className="w-5 h-5 text-pink-500" />
-      <h3 className="text-lg font-semibold text-gray-800">緊急連絡先</h3>
-    </div>
+    <SectionHeader icon={Phone} title="緊急連絡先" />
     <div className="space-y-3">
       <div className="bg-white rounded-lg p-4">
         <div className="font-medium text-gray-800">警察（緊急）</div>
@@ -33,6 +37,45 @@ const EmergencyContact = () => (
         <div className="text-pink-500 font-bold">#8008</div>
       </div>
     </div>
+  </div>
+);
+
+const RecommendedPlaces = () => (
+  <div className="bg-white rounded-xl p-6 shadow-sm">
+    <SectionHeader icon={Users} title="おすすめの出会いの場一覧" />
+    <ul className="list-disc pl-5 space-y-2 text-gray-600">
+      <li>地域のイベントや交流会</li>
+      <li>趣味やスポーツのサークル</li>
+      <li>ボランティア活動</li>
+      <li>習い事やセミナー</li>
+      <li>職場や友人の紹介</li>
+    </ul>
+  </div>
+);
+
+const CautionList = () => (
+  <div className="bg-white rounded-xl p-6 shadow-sm">
+    <SectionHeader icon={AlertTriangle} title="マッチングアプリで気を付けること" />
+    <ul className="list-disc pl-5 space-y-2 text-gray-600">
+      <li>過度に個人情報を公開しない</li>
+      <li>最初のデートは公共の場所で</li>
+      <li>不審なメッセージには注意</li>
+      <li>金銭や個人情報を要求されたら即通報</li>
+      <li>プロフィール写真が他人の画像の可能性も疑う</li>
+    </ul>
+  </div>
+);
+
+const AvoidList = () => (
+  <div className="bg-white rounded-xl p-6 shadow-sm">
+    <SectionHeader icon={Ban} title="絶対に避けるべき男女一覧" />
+    <ul className="list-disc pl-5 space-y-2 text-gray-600">
+      <li>過度に束縛する人</li>
+      <li>暴力的な性格や態度の人</li>
+      <li>借金や金銭問題を抱えている人</li>
+      <li>他の異性との関係が切れていない人</li>
+      <li>SNSでネガティブ投稿が多い人</li>
+    </ul>
   </div>
 );
 
@@ -70,30 +113,13 @@ export const SafetyPage = () => {
           {safetyGuidelines.map((guideline, index) => (
             <SafetyCard key={index} {...guideline} />
           ))}
+          <RecommendedPlaces />
         </div>
         
         <div className="space-y-6">
           <EmergencyContact />
-          <div className="bg-white rounded-xl p-6 shadow-sm">
-            <h3 className="text-lg font-semibold text-gray-800 mb-4">
-              デートDVについて
-            </h3>
-            <div className="prose text-gray-600">
-              <p>
-                デートDVとは、恋人間で起こる暴力のことです。
-                身体的な暴力だけでなく、精神的な暴力や、SNSでの監視なども含まれます。
-              </p>
-              <p className="mt-4">
-                以下のような行為は要注意です：
-              </p>
-              <ul className="list-disc pl-5 mt-2 space-y-2">
-                <li>執拗な連絡や行動の監視</li>
-                <li>SNSのパスワードを要求する</li>
-                <li>他の異性との付き合いを制限する</li>
-                <li>暴言や脅し</li>
-              </ul>
-            </div>
-          </div>
+          <CautionList />
+          <AvoidList />
         </div>
       </div>
     </div>

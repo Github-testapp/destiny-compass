@@ -1,62 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { Book, Calendar, PlusCircle, Image, MapPin, Smile, Edit2, Trash2 } from 'lucide-react';
-import { CreateDiaryForm } from '../components/diary/CreateDiaryForm';
+import { Book, Calendar, PlusCircle } from 'lucide-react';
+import CreateDiaryForm from '../components/diary/CreateDiaryForm';
+import DiaryList from '../components/diary/DiaryList';
 import { getAllItems, deleteItem, addItem, updateItem } from '../utils/db';
 
-const DiaryEntry = ({ entry, onEdit, onDelete }) => (
-  <div className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
-    <div className="flex items-start gap-4">
-      <div className="flex-shrink-0">
-        <div className="w-12 h-12 bg-pink-50 rounded-full flex items-center justify-center">
-          <Calendar className="w-6 h-6 text-pink-500" />
-        </div>
-      </div>
-      <div className="flex-grow">
-        <div className="flex justify-between items-start mb-2">
-          <h3 className="text-lg font-semibold text-gray-800">{entry.title}</h3>
-          <div className="flex gap-2">
-            <button
-              onClick={() => onEdit(entry)}
-              className="p-2 text-gray-500 hover:text-gray-700 rounded-full hover:bg-gray-100"
-            >
-              <Edit2 className="w-4 h-4" />
-            </button>
-            <button
-              onClick={() => onDelete(entry.id)}
-              className="p-2 text-gray-500 hover:text-red-500 rounded-full hover:bg-gray-100"
-            >
-              <Trash2 className="w-4 h-4" />
-            </button>
-          </div>
-        </div>
-        <p className="text-sm text-gray-500">{entry.date}</p>
-        <p className="text-gray-600 mt-2 mb-4">{entry.content}</p>
-        <div className="flex items-center gap-4 text-sm text-gray-500">
-          {entry.location && (
-            <div className="flex items-center">
-              <MapPin className="w-4 h-4 mr-1" />
-              {entry.location}
-            </div>
-          )}
-          {entry.mood && (
-            <div className="flex items-center">
-              <Smile className="w-4 h-4 mr-1" />
-              {entry.mood}
-            </div>
-          )}
-        </div>
-      </div>
-    </div>
-  </div>
-);
-
-export const DiaryPage = () => {
+const DiaryPage = () => {
   const [diaryEntries, setDiaryEntries] = useState([]);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [editingEntry, setEditingEntry] = useState(null);
   const [statistics, setStatistics] = useState({
     totalEntries: 0,
-    withPhotos: 0,
     withLocations: 0
   });
 
@@ -70,7 +23,6 @@ export const DiaryPage = () => {
       // 統計情報の更新
       setStatistics({
         totalEntries: entries.length,
-        withPhotos: entries.filter(entry => entry.images?.length > 0).length,
         withLocations: entries.filter(entry => entry.location).length
       });
     } catch (error) {
@@ -139,24 +91,11 @@ export const DiaryPage = () => {
 
       <div className="grid md:grid-cols-2 gap-6">
         <div className="space-y-6">
-          {diaryEntries.length > 0 ? (
-            diaryEntries.map(entry => (
-              <DiaryEntry
-                key={entry.id}
-                entry={entry}
-                onEdit={setEditingEntry}
-                onDelete={handleDelete}
-              />
-            ))
-          ) : (
-            <div className="text-center py-12 bg-white rounded-xl shadow-sm">
-              <Book className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-              <p className="text-gray-600">
-                まだ心の記録が綴られていません。<br />
-            あなたの大切な想いを紡いでいきましょう
-              </p>
-            </div>
-          )}
+          <DiaryList
+            entries={diaryEntries}
+            onEdit={setEditingEntry}
+            onDelete={handleDelete}
+          />
         </div>
 
         <div className="bg-white rounded-xl p-6 shadow-sm h-fit sticky top-4">
@@ -164,17 +103,13 @@ export const DiaryPage = () => {
             心の軌跡
           </h2>
           <div className="space-y-4">
-            <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+            <div className="flex justify-between items-center p-3 bg-pink-50/50 rounded-lg">
               <span className="text-gray-600">想いを綴った日々</span>
               <span className="font-semibold text-gray-800">{statistics.totalEntries}日</span>
             </div>
-            <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-              <span className="text-gray-600">想い出の写真</span>
-              <span className="font-semibold text-gray-800">{statistics.withPhotos}件</span>
-            </div>
-            <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-              <span className="text-gray-600">心が留まった場所</span>
-              <span className="font-semibold text-gray-800">{statistics.withLocations}件</span>
+            <div className="flex justify-between items-center p-3 bg-pink-50/50 rounded-lg">
+              <span className="text-gray-600">心が留まった瞬間</span>
+              <span className="font-semibold text-gray-800">{statistics.withLocations}回</span>
             </div>
           </div>
         </div>
@@ -192,3 +127,5 @@ export const DiaryPage = () => {
     </div>
   );
 };
+
+export default DiaryPage;

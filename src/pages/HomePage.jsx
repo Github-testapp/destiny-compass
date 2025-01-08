@@ -23,13 +23,7 @@ const FeatureCard = ({ icon: Icon, title, description, onClick }) => (
 
 const HomePage = ({ setCurrentPage }) => {
   const features = [
-    {
-      icon: Calendar,
-      title: "縁結びタイムライン",
-      description:
-        "大切な思い出をすべて記録。いつ、どこで、何をしたのか。愛を育むために使った時間とお金を振り返りながら、より素敵な関係を築いていきましょう。",
-      page: "timeline",
-    },
+    
     {
       icon: CheckSquare,
       title: "運命の相性チェック",

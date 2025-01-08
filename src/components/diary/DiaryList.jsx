@@ -1,82 +1,69 @@
-import React from "react";
+import React from 'react';
+import { Calendar, Edit2, Trash2, Book } from 'lucide-react';
 
-export const DiaryList = ({ entries, onDelete, onEdit }) => {
-  const getMoodDisplay = (mood) => {
-    const moodMap = {
-      とても良い: "😊 とても良い",
-      良い: "🙂 良い",
-      普通: "😐 普通",
-      悪い: "☹️ 悪い",
-      とても悪い: "😢 とても悪い",
-    };
-    return moodMap[mood] || mood;
-  };
+const DiaryEntry = ({ entry, onEdit, onDelete }) => (
+  <div className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
+    <div className="flex items-start gap-4">
+      <div className="flex-shrink-0">
+        <div className="w-12 h-12 bg-pink-50 rounded-full flex items-center justify-center">
+          <Calendar className="w-6 h-6 text-pink-500" />
+        </div>
+      </div>
+      <div className="flex-grow">
+        <div className="flex justify-between items-start mb-2">
+          <h3 className="text-lg font-semibold text-gray-800">{entry.title}</h3>
+          <div className="flex gap-2">
+            <button
+              onClick={() => onEdit(entry)}
+              className="p-2 text-gray-500 hover:text-gray-700 rounded-full hover:bg-gray-100"
+            >
+              <Edit2 className="w-4 h-4" />
+            </button>
+            <button
+              onClick={() => onDelete(entry.id)}
+              className="p-2 text-gray-500 hover:text-red-500 rounded-full hover:bg-gray-100"
+            >
+              <Trash2 className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+        <div className="text-sm text-gray-500 mb-4">
+          <div>{entry.date}</div>
+          {entry.mood && <div className="mt-1">心の色: {entry.mood}</div>}
+        </div>
+        <div className="prose text-gray-600 whitespace-pre-wrap">
+          {entry.content}
+        </div>
+      </div>
+    </div>
+  </div>
+);
 
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    const options = {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-      weekday: "long",
-    };
-    return date.toLocaleDateString("ja-JP", options);
-  };
+const DiaryList = ({ entries = [], onEdit, onDelete }) => {
+  if (entries.length === 0) {
+    return (
+      <div className="text-center py-12 bg-white rounded-xl shadow-sm">
+        <Book className="w-12 h-12 text-pink-300 mx-auto mb-4" />
+        <p className="text-gray-600">
+          まだ心の記録が綴られていません。<br />
+          あなたの大切な想いを紡いでいきましょう
+        </p>
+      </div>
+    );
+  }
 
   return (
-    <div className="space-y-4">
-      {entries
-        .slice()
-        .reverse()
-        .map((entry, index) => (
-          <div
-            key={index}
-            className="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow"
-          >
-            <div className="flex justify-between items-center mb-2">
-              <span className="font-bold text-gray-700">
-                {formatDate(entry.date)}
-              </span>
-              <span className="text-gray-500">
-                {getMoodDisplay(entry.mood)}
-              </span>
-            </div>
-            <div className="border-l-4 border-pink-200 pl-4 mb-3">
-              <p className="text-gray-700 mb-2 whitespace-pre-line">
-                {entry.content}
-              </p>
-            </div>
-            {entry.reflection && (
-              <div className="bg-pink-50 p-3 rounded">
-                <p className="text-gray-600 text-sm italic whitespace-pre-line">
-                  【振り返り】
-                  {entry.reflection}
-                </p>
-              </div>
-            )}
-            <div className="flex justify-end space-x-2">
-              <button
-                onClick={() => onEdit(index)}
-                className="text-blue-500 hover:underline"
-              >
-                編集
-              </button>
-              <button
-                onClick={() => onDelete(index)}
-                className="text-red-500 hover:underline"
-              >
-                削除
-              </button>
-            </div>
-          </div>
-        ))}
-      {entries.length === 0 && (
-        <div className="text-center text-gray-500 py-8">
-          まだ日記が書かれていません。
-          <br />
-          今日の出来事を記録してみましょう！
-        </div>
-      )}
+    <div className="space-y-6">
+      {entries.map(entry => (
+        <DiaryEntry
+          key={entry.id}
+          entry={entry}
+          onEdit={onEdit}
+          onDelete={onDelete}
+        />
+      ))}
     </div>
   );
 };
+
+export default DiaryList;
