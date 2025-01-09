@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { Book, Calendar, PlusCircle } from 'lucide-react';
+import { Book, PlusCircle } from 'lucide-react';
 import CreateDiaryForm from '../components/diary/CreateDiaryForm';
 import DiaryList from '../components/diary/DiaryList';
+import DiaryCalendar from '../components/diary/DiaryCalendar';
 import { getAllItems, deleteItem, addItem, updateItem } from '../utils/db';
 
 const DiaryPage = () => {
   const [diaryEntries, setDiaryEntries] = useState([]);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [editingEntry, setEditingEntry] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(null);
   const [statistics, setStatistics] = useState({
-    totalEntries: 0,
-    withLocations: 0
+    totalEntries: 0
   });
 
   // 日記エントリーの読み込み
@@ -19,11 +20,8 @@ const DiaryPage = () => {
       const entries = await getAllItems('diaries');
       const sortedEntries = entries.sort((a, b) => new Date(b.date) - new Date(a.date));
       setDiaryEntries(sortedEntries);
-      
-      // 統計情報の更新
       setStatistics({
-        totalEntries: entries.length,
-        withLocations: entries.filter(entry => entry.location).length
+        totalEntries: entries.length
       });
     } catch (error) {
       console.error('Failed to load diary entries:', error);
@@ -71,6 +69,11 @@ const DiaryPage = () => {
     }
   };
 
+  // 選択された日付のエントリーを取得
+  const selectedEntries = selectedDate
+    ? diaryEntries.filter(entry => entry.date === selectedDate)
+    : diaryEntries.slice(0, 3); // デフォルトでは最新3件を表示
+
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="flex justify-between items-center mb-8">
@@ -90,28 +93,33 @@ const DiaryPage = () => {
       </div>
 
       <div className="grid md:grid-cols-2 gap-6">
-        <div className="space-y-6">
-          <DiaryList
+        <div>
+          <DiaryCalendar
             entries={diaryEntries}
-            onEdit={setEditingEntry}
-            onDelete={handleDelete}
+            onDateSelect={setSelectedDate}
+            selectedDate={selectedDate}
           />
-        </div>
-
-        <div className="bg-white rounded-xl p-6 shadow-sm h-fit sticky top-4">
-          <h2 className="text-lg font-semibold text-gray-800 mb-4">
-            心の軌跡
-          </h2>
-          <div className="space-y-4">
+          
+          <div className="mt-6 bg-white rounded-xl p-6 shadow-sm">
+            <h2 className="text-lg font-semibold text-gray-800 mb-4">
+              心の軌跡
+            </h2>
             <div className="flex justify-between items-center p-3 bg-pink-50/50 rounded-lg">
               <span className="text-gray-600">想いを綴った日々</span>
               <span className="font-semibold text-gray-800">{statistics.totalEntries}日</span>
             </div>
-            <div className="flex justify-between items-center p-3 bg-pink-50/50 rounded-lg">
-              <span className="text-gray-600">心が留まった瞬間</span>
-              <span className="font-semibold text-gray-800">{statistics.withLocations}回</span>
-            </div>
           </div>
+        </div>
+
+        <div className="space-y-6">
+          <h2 className="text-lg font-semibold text-gray-800">
+            {selectedDate ? `${selectedDate} の記録` : '最近の記録'}
+          </h2>
+          <DiaryList
+            entries={selectedEntries}
+            onEdit={setEditingEntry}
+            onDelete={handleDelete}
+          />
         </div>
       </div>
 
