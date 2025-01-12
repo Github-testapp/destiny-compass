@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { CheckCircle, Circle, ArrowRight } from "lucide-react";
 import { questions } from "../../data/questions";
 import { calculateScore } from "../../utils/compatibilityUtils";
-import { CompatibilityResult } from "./CompatibilityResult";
+import CompatibilityResult from "./CompatibilityResult";
 import { addItem } from "../../utils/db";
 
 const RatingOption = ({ value, selected, onSelect }) => (
@@ -58,6 +58,7 @@ export const CompatibilityChecklist = () => {
   const [currentCategory, setCurrentCategory] = useState(0);
   const [showResult, setShowResult] = useState(false);
   const [results, setResults] = useState(null);
+  const containerRef = useRef(null);
 
   const handleAnswer = (questionId, value) => {
     setAnswers((prev) => ({
@@ -73,9 +74,19 @@ export const CompatibilityChecklist = () => {
   const answeredQuestions = Object.keys(answers).length;
   const completionRate = (answeredQuestions / totalQuestions) * 100;
 
+  const scrollToTop = () => {
+    if (containerRef.current) {
+      containerRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  };
+
   const handleNext = () => {
     if (currentCategory < questions.length - 1) {
       setCurrentCategory((prev) => prev + 1);
+      scrollToTop();
     } else {
       const results = calculateScore(answers);
       setResults(results);
@@ -87,6 +98,13 @@ export const CompatibilityChecklist = () => {
         answers,
         results,
       });
+    }
+  };
+
+  const handlePrevious = () => {
+    if (currentCategory > 0) {
+      setCurrentCategory((prev) => prev - 1);
+      scrollToTop();
     }
   };
 
@@ -103,7 +121,7 @@ export const CompatibilityChecklist = () => {
   const currentQuestions = questions[currentCategory];
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div ref={containerRef} className="container mx-auto px-4 py-8">
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-gray-800 mb-2">
           運命の相性チェック
@@ -151,7 +169,7 @@ export const CompatibilityChecklist = () => {
       {/* ナビゲーションボタン */}
       <div className="flex justify-between items-center">
         <button
-          onClick={() => setCurrentCategory((prev) => Math.max(0, prev - 1))}
+          onClick={handlePrevious}
           className={`px-4 py-2 rounded-lg text-gray-600 hover:bg-gray-50
             ${currentCategory === 0 ? "invisible" : ""}`}
         >

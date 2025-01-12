@@ -1,5 +1,4 @@
 // 回答の重みづけと分析を行うユーティリティ関数
-
 export const calculateScore = (answers) => {
   // カテゴリごとの回答数を集計
   const categoryCounts = {};
@@ -9,12 +8,12 @@ export const calculateScore = (answers) => {
 
   Object.entries(answers).forEach(([questionId, value]) => {
     const [category] = questionId.split('-');
-    
+
     if (!categoryCounts[category]) {
       categoryCounts[category] = 0;
       categoryScores[category] = 0;
     }
-    
+
     categoryCounts[category]++;
     categoryScores[category] += value;
     totalScore += value;
@@ -24,17 +23,20 @@ export const calculateScore = (answers) => {
   // カテゴリごとの平均スコアを計算
   const categoryAnalysis = Object.entries(categoryScores).map(([category, score]) => ({
     category,
-    score: (score / (categoryCounts[category] * 5)) * 100, // 5段階評価を100点満点に換算
+    score: Math.round((score / (categoryCounts[category] * 5)) * 100), // 5段階評価を100点満点に換算
     count: categoryCounts[category]
   }));
 
   // 総合スコアを計算（100点満点）
-  const overallScore = (totalScore / (totalQuestions * 5)) * 100;
+  const overallScore = Math.round((totalScore / (totalQuestions * 5)) * 100);
+
+  const analysis = analyzeResults(categoryAnalysis);
 
   return {
-    overallScore: Math.round(overallScore),
+    totalScore: overallScore,
     categoryScores: categoryAnalysis,
-    details: analyzeResults(categoryAnalysis)
+    recommendations: analysis.recommendations,
+    strengths: analysis.strengths
   };
 };
 
@@ -44,9 +46,11 @@ const analyzeResults = (categoryScores) => {
 
   categoryScores.forEach(({ category, score }) => {
     if (score >= 80) {
-      strengths.push(getStrengthMessage(category));
+      const strength = getStrengthMessage(category);
+      if (strength) strengths.push(strength);
     } else {
-      recommendations.push(getRecommendation(category));
+      const recommendation = getRecommendation(category);
+      if (recommendation) recommendations.push(recommendation);
     }
   });
 
@@ -68,7 +72,7 @@ const getStrengthMessage = (category) => {
       description: "生活リズムや習慣が合っており、快適な共同生活が期待できます。"
     }
   };
-  return messages[category];
+  return messages[category] || null;
 };
 
 const getRecommendation = (category) => {
@@ -86,5 +90,5 @@ const getRecommendation = (category) => {
       description: "お互いの生活リズムや習慣を理解し、折り合いをつける方法を話し合ってみましょう。"
     }
   };
-  return recommendations[category];
+  return recommendations[category] || null;
 };
